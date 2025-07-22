@@ -1,0 +1,14 @@
+{
+  "name": "runmate",
+  "version": "1.0.0",
+  "description": "Running Pace & Speed Table - A simple static web app for runners",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'No build needed - static HTML' && exit 0",
+    "build:azure": "echo 'No build needed - static HTML' && exit 0",
+    "start": "echo 'Static HTML - open index.html in browser'"
+  },
+  "keywords": ["running", "pace", "speed", "static", "html"],
+  "author": "",
+  "license": "MIT"
+}
