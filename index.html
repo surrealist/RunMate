@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&family=JetBrains+Mono:wght@300;400&family=Jura&family=Major+Mono+Display&family=Marhey:wght@600&family=Patua+One&family=Roboto&display=swap" rel="stylesheet">
+    
+    <title>Pace & Speed Table</title>
+    <style>
+        body {
+            font-family: Roboto, Arial, sans-serif;
+            margin: 10px;
+            background: #f5f5f5;
+        }
+        
+        .header-container {
+            position: sticky;
+            top: 0;
+            background: #f5f5f5;
+            z-index: 100;
+            padding: 10px 0;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 1.5em;
+            margin: 0 0 10px 0;
+        }
+
+        .sticky-table-header {
+            width: 100%;
+            max-width: 400px;
+            margin: 10px auto 0;
+            background: white;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-collapse: collapse;
+            display: table;
+        }
+
+        .sticky-table-header thead {
+            display: table-header-group;
+        }
+
+        .sticky-table-header th {
+            background: #4CAF50;
+            color: white;
+            font-weight: bold;
+            padding: 12px 8px;
+            text-align: center;
+            border-bottom: 2px solid #45a049;
+            border-right: 1px solid #45a049;
+            width: 50%;
+        }
+
+        .sticky-table-header th:last-child {
+            border-right: none;
+        }
+        
+        table {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-collapse: collapse;
+        }
+
+        table thead {
+            display: none;
+        }
+        
+        th, td {
+            padding: 12px 8px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        tr:hover {
+            background: #e8f5e8;
+        }
+        
+        .pace {
+            font-weight: bold;
+            color: #2196F3;
+        }
+        
+        .speed {
+            color: #FF9800;
+        }
+
+        .highlighted {
+            background: #4CAF50 !important;
+            color: white !important;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .highlighted .pace,
+        .highlighted .speed {
+            color: white !important;
+        }
+
+        tbody tr {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+
+
+        .swap-btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+        }
+
+        .swap-btn:hover {
+            background: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1>Running Pace & Speed</h1>
+        <button class="swap-btn" onclick="swapColumns()">⇄ Swap Columns</button>
+        <table class="sticky-table-header">
+            <thead>
+                <tr>
+                    <th id="sticky-header-1">Pace (min/km)</th>
+                    <th id="sticky-header-2">Speed (km/h)</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Pace (min/km)</th>
+                <th>Speed (km/h)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td class="pace">3:00</td><td class="speed">20.0</td></tr>
+            <tr><td class="pace">3:15</td><td class="speed">18.5</td></tr>
+            <tr><td class="pace">3:30</td><td class="speed">17.1</td></tr>
+            <tr><td class="pace">3:45</td><td class="speed">16.0</td></tr>
+            <tr><td class="pace">4:00</td><td class="speed">15.0</td></tr>
+            <tr><td class="pace">4:15</td><td class="speed">14.1</td></tr>
+            <tr><td class="pace">4:30</td><td class="speed">13.3</td></tr>
+            <tr><td class="pace">4:45</td><td class="speed">12.6</td></tr>
+            <tr><td class="pace">5:00</td><td class="speed">12.0</td></tr>
+            <tr><td class="pace">5:15</td><td class="speed">11.4</td></tr>
+            <tr><td class="pace">5:30</td><td class="speed">10.9</td></tr>
+            <tr><td class="pace">5:45</td><td class="speed">10.4</td></tr>
+            <tr><td class="pace">6:00</td><td class="speed">10.0</td></tr>
+            <tr><td class="pace">6:15</td><td class="speed">9.6</td></tr>
+            <tr><td class="pace">6:30</td><td class="speed">9.2</td></tr>
+            <tr><td class="pace">6:45</td><td class="speed">8.9</td></tr>
+            <tr><td class="pace">7:00</td><td class="speed">8.6</td></tr>
+            <tr><td class="pace">7:15</td><td class="speed">8.3</td></tr>
+            <tr><td class="pace">7:30</td><td class="speed">8.0</td></tr>
+            <tr><td class="pace">7:45</td><td class="speed">7.7</td></tr>
+            <tr><td class="pace">8:00</td><td class="speed">7.5</td></tr>
+            <tr><td class="pace">8:15</td><td class="speed">7.3</td></tr>
+            <tr><td class="pace">8:30</td><td class="speed">7.1</td></tr>
+            <tr><td class="pace">8:45</td><td class="speed">6.9</td></tr>
+            <tr><td class="pace">9:00</td><td class="speed">6.7</td></tr>
+            <tr><td class="pace">9:15</td><td class="speed">6.5</td></tr>
+            <tr><td class="pace">9:30</td><td class="speed">6.3</td></tr>
+            <tr><td class="pace">9:45</td><td class="speed">6.2</td></tr>
+            <tr><td class="pace">10:00</td><td class="speed">6.0</td></tr>
+            <tr><td class="pace">10:15</td><td class="speed">5.9</td></tr>
+            <tr><td class="pace">10:30</td><td class="speed">5.7</td></tr>
+            <tr><td class="pace">10:45</td><td class="speed">5.6</td></tr>
+            <tr><td class="pace">11:00</td><td class="speed">5.5</td></tr>
+            <tr><td class="pace">11:15</td><td class="speed">5.3</td></tr>
+            <tr><td class="pace">11:30</td><td class="speed">5.2</td></tr>
+            <tr><td class="pace">11:45</td><td class="speed">5.1</td></tr>
+            <tr><td class="pace">12:00</td><td class="speed">5.0</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tableRows = document.querySelectorAll('tbody tr');
+
+            tableRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    this.classList.toggle('highlighted');
+                });
+            });
+        });
+
+        function swapColumns() {
+            console.log('Swap function called');
+
+            const table = document.querySelector('table:not(.sticky-table-header)');
+            const bodyRows = table.querySelectorAll('tbody tr');
+
+            // Swap sticky header cells
+            const stickyHeader1 = document.getElementById('sticky-header-1');
+            const stickyHeader2 = document.getElementById('sticky-header-2');
+
+            console.log('Sticky headers found:', stickyHeader1, stickyHeader2);
+
+            if (stickyHeader1 && stickyHeader2) {
+                const tempStickyText = stickyHeader1.textContent;
+                stickyHeader1.textContent = stickyHeader2.textContent;
+                stickyHeader2.textContent = tempStickyText;
+            }
+
+            // Swap data cells in each row
+            bodyRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length >= 2) {
+                    const tempContent = cells[0].innerHTML;
+                    const tempClass = cells[0].className;
+
+                    cells[0].innerHTML = cells[1].innerHTML;
+                    cells[0].className = cells[1].className;
+                    cells[1].innerHTML = tempContent;
+                    cells[1].className = tempClass;
+                }
+            });
+
+            console.log('Swap completed');
+        }
+    </script>
+</body>
+</html>
