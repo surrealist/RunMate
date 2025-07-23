@@ -123,19 +123,37 @@
 
 
 
-        .swap-btn {
+        .swap-btn, .interval-btn {
             background: #2196F3;
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 10px 16px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 500;
+            margin: 0 5px;
+            height: 40px;
+            min-width: 120px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+            box-sizing: border-box;
             transition: background-color 0.2s ease;
         }
 
-        .swap-btn:hover {
+        .swap-btn:hover, .interval-btn:hover {
             background: #1976D2;
+        }
+
+        .interval-btn {
+            background: #FF9800;
+            min-width: 140px;
+        }
+
+        .interval-btn:hover {
+            background: #F57C00;
         }
     </style>
 </head>
@@ -143,6 +161,7 @@
     <div class="header-container">
         <h1>Running Pace & Speed</h1>
         <button class="swap-btn" onclick="swapColumns()">⇄ Swap Columns</button>
+        <button class="interval-btn" onclick="cycleInterval()">⏱ Interval: 0:15</button>
         <table class="sticky-table-header">
             <thead>
                 <tr>
@@ -202,13 +221,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const tableRows = document.querySelectorAll('tbody tr');
-
-            tableRows.forEach(row => {
-                row.addEventListener('click', function() {
-                    this.classList.toggle('highlighted');
-                });
-            });
+            // Initialize table with default interval (0:15)
+            updateTable();
         });
 
         function swapColumns() {
@@ -244,6 +258,82 @@
             });
 
             console.log('Swap completed');
+        }
+
+        // Interval cycling functionality
+        let currentInterval = 2; // Start with 0:15 (index 2)
+        const intervals = ['0:05', '0:10', '0:15'];
+
+        function generateTableData(intervalStr) {
+            const tableData = [];
+
+            // Convert interval string to seconds for calculations
+            const [minutes, seconds] = intervalStr.split(':').map(Number);
+            const intervalSeconds = minutes * 60 + seconds;
+
+            // Generate pace data from 3:00 to 14:00
+            const startPaceSeconds = 3 * 60; // 3:00 in seconds
+            const endPaceSeconds = 14 * 60;  // 14:00 in seconds
+
+            let currentPaceSeconds = startPaceSeconds;
+
+            while (currentPaceSeconds <= endPaceSeconds) {
+                const paceMinutes = Math.floor(currentPaceSeconds / 60);
+                const paceSecondsRemainder = currentPaceSeconds % 60;
+                const paceStr = `${paceMinutes}:${paceSecondsRemainder.toString().padStart(2, '0')}`;
+
+                // Calculate speed: speed (km/h) = 60 / pace (min/km)
+                const paceInMinutes = currentPaceSeconds / 60;
+                const speed = 60 / paceInMinutes;
+                const speedStr = speed.toFixed(1);
+
+                tableData.push({
+                    pace: paceStr,
+                    speed: speedStr
+                });
+
+                currentPaceSeconds += intervalSeconds;
+            }
+
+            return tableData;
+        }
+
+        function updateTable() {
+            const tableData = generateTableData(intervals[currentInterval]);
+            const tbody = document.querySelector('tbody');
+
+            // Clear existing rows
+            tbody.innerHTML = '';
+
+            // Add new rows
+            tableData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="pace">${row.pace}</td>
+                    <td class="speed">${row.speed}</td>
+                `;
+
+                // Add click event listener for highlighting
+                tr.addEventListener('click', function() {
+                    this.classList.toggle('highlighted');
+                });
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        function cycleInterval() {
+            // Move to next interval (cycle back to 0 after reaching the end)
+            currentInterval = (currentInterval + 1) % intervals.length;
+
+            // Update button text
+            const intervalBtn = document.querySelector('.interval-btn');
+            intervalBtn.textContent = `⏱ Interval: ${intervals[currentInterval]}`;
+
+            // Update table content
+            updateTable();
+
+            console.log('Interval changed to:', intervals[currentInterval]);
         }
     </script>
 </body>
